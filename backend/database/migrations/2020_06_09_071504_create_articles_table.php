@@ -21,7 +21,7 @@ class CreateArticlesTable extends Migration
             $table->string('link');
             $table->string('slug')->unique();
             $table->string('emoji');
-            $table->string('content');
+            $table->longText('content');
             $table->timestamps();
         });
     }

@@ -18,7 +18,8 @@ class ArticlesForeignKeysToCategories extends Migration
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
-                ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('set null');
         });
     }
 
