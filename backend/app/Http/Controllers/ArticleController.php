@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
 
@@ -43,10 +42,7 @@ class ArticleController extends Controller
     {
         try {
             $list=QueryBuilder::for(Article::class)
-                ->allowedFilters(
-                    [AllowedFilter::exact('title')],
-                    [AllowedFilter::exact('content')]
-                )
+                ->allowedFilters(['title', 'content'])
                 ->get();
             return response()->json($list, Response::HTTP_OK);
         } catch (InvalidFilterQuery $e) {
