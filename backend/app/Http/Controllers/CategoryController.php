@@ -16,6 +16,9 @@ class CategoryController extends Controller
     public function index()
     {
         $list=Category::all();
+        var_dump(1);
+        die();
+
         return response()->json($list, Response::HTTP_OK);
     }
 
