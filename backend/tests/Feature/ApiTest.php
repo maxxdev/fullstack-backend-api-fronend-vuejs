@@ -27,7 +27,7 @@ class ApiTest extends TestCase
     public function testCategoryTest()
     {
 
-        //$this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $response=$this->get('/api/categories/1');
         $response
