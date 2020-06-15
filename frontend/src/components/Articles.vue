@@ -3,15 +3,17 @@
     <h1>Articles</h1>
     <hr>
     <div class="filter">
-      <form action="">
+      <form @submit.prevent="submitHandler">
         <div class="filter_item">
-          <label for="filter__category">Category</label>:<input type="text" id="filter__category">
+          <label for="filter__category">Category</label>:
+          <input type="text" id="filter__category"
+                 v-model="filter.category">
         </div>
         <div class="filter_item">
-          <label for="filter__title">Title</label>:<input type="text" id="filter__title">
+          <label for="filter__title">Title</label>:<input type="text" id="filter__title" v-model="filter.title">
         </div>
         <div class="filter_item">
-          <label for="filter__content">Content</label>:<input type="text" id="filter__content">
+          <label for="filter__content">Content</label>:<input type="text" id="filter__content" v-model="filter.content">
         </div>
         <div class="filter_item">
           <button type="submit">Search</button>
@@ -31,11 +33,24 @@
     name: 'Articles',
     data: () => ({
       loading: true,
-      articles: []
+      articles: [],
+      filter: {
+        category: null,
+        title: null,
+        content: null
+      }
     }),
     async mounted() {
       this.articles = await this.$store.dispatch('fetchArticles')
       this.loading = false
+    },
+    methods: {
+      async submitHandler() {
+        const filter = {...this.filter}
+        this.loading = true
+        this.articles = await this.$store.dispatch('filterArticles', filter)
+        this.loading = false
+      }
     }
   }
 </script>
