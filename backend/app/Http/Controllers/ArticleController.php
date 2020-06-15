@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -19,7 +20,7 @@ class ArticleController extends Controller
     public function index()
     {
         $list=Article::all();
-        return response()->json($list, Response::HTTP_OK);
+        return response()->json(ArticleResource::collection($list), Response::HTTP_OK);
     }
 
     /**
@@ -47,8 +48,7 @@ class ArticleController extends Controller
             $list=QueryBuilder::for(Article::class)
                 ->allowedFilters(['title', 'content', 'category.name'])
                 ->get();
-
-            return response()->json($list, Response::HTTP_OK);
+            return response()->json(ArticleResource::collection($list), Response::HTTP_OK);
         } catch (InvalidFilterQuery $e) {
             $errors=[
                 'error'=>$e->getMessage()
