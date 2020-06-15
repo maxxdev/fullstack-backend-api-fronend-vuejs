@@ -18,12 +18,7 @@ export default {
       }
     },
     async filterArticles({dispatch, commit}, filter) {
-      let filterStr = '?'
-      Object.keys(filter).forEach(key => {
-        const val = filter[key] || ''
-        if (val)
-          filterStr += `&filter[${key}]=${val}`
-      })
+      const filterStr = objectToFilterString(filter)
       try {
         let res = null
         await axios.get('/articles/search' + filterStr, {baseURL: process.env.VUE_APP_API_URL})
@@ -39,4 +34,20 @@ export default {
       }
     }
   }
+}
+
+function objectToFilterString(filter) {
+  let filterStr = '?'
+  Object.keys(filter).forEach(key => {
+    let val = filter[key] || ''
+    let propertyKey = key
+    if (typeof val === 'object') {
+      const subKey = Object.keys(val)[0];
+      propertyKey = key + '.' + subKey
+      val = filter[key][subKey]
+    }
+    if (val)
+      filterStr += `&filter[${propertyKey}]=${val}`
+  })
+  return filterStr
 }

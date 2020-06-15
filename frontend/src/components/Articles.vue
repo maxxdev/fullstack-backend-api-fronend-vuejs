@@ -7,7 +7,7 @@
         <div class="filter_item">
           <label for="filter__category">Category</label>:
           <input type="text" id="filter__category"
-                 v-model="filter.category">
+                 v-model="filter.category.name">
         </div>
         <div class="filter_item">
           <label for="filter__title">Title</label>:<input type="text" id="filter__title" v-model="filter.title">
@@ -35,7 +35,9 @@
       loading: true,
       articles: [],
       filter: {
-        category: null,
+        category: {
+          name: null
+        },
         title: null,
         content: null
       }

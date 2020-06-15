@@ -6,6 +6,7 @@ use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\QueryBuilder\Exceptions\InvalidFilterQuery;
 
 class ArticleController extends Controller
@@ -38,12 +39,15 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(Request $request)
     {
+
+
         try {
             $list=QueryBuilder::for(Article::class)
-                ->allowedFilters(['title', 'content'])
+                ->allowedFilters(['title', 'content', 'category.name'])
                 ->get();
+
             return response()->json($list, Response::HTTP_OK);
         } catch (InvalidFilterQuery $e) {
             $errors=[
