@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Articles from "./articles"
-import Items from "./items"
+import articles from "./articles"
+import items from "./items"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  namespaced: true,
   state: {},
   mutations: {},
   actions: {},
-  modules: {Articles, Items}
+  modules: {articles, items}
 })

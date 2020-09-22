@@ -3,7 +3,7 @@
     <h1>Items</h1>
     <hr>
     <div class="filter">
-      <form @submit.prevent="submitHandler">
+      <form>
         <div class="filter_item">
           <label for="filter__category">Category</label>:
           <input type="text" id="filter__category"
@@ -15,10 +15,8 @@
         <div class="filter_item">
           <label for="filter__content">Content</label>:<input type="text" id="filter__content" v-model="filter.content">
         </div>
-        <div class="filter_item">
-          <button type="submit">Search</button>
-        </div>
       </form>
+
     </div>
     <hr>
     <div v-if="loading">Loading...</div>
@@ -47,11 +45,24 @@ export default {
   }),
   computed: {
     computedItems() {
-      return this.$store.getters.items.items
+      const filterKey = this.filter.title
+      let items = this.$store.getters["items/items"].items
+      if (filterKey) {
+        items = items.filter(function (row) {
+          return Object.keys(row).some(function (key) {
+            return (
+                String(row[key])
+                    .toLowerCase()
+                    .indexOf(filterKey) > -1
+            )
+          })
+        })
+      }
+      return items
     }
   },
   async mounted() {
-    await this.$store.dispatch('fetchItems')
+    await this.$store.dispatch('items/fetchItems')
     this.loading = false
   },
   methods: {
