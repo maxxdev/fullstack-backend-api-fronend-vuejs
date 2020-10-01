@@ -2,7 +2,7 @@
   <div class="subheader">
     <ul>
       <li>
-        <router-link to="/articles">articles</router-link>
+        <router-link to="/">home</router-link>
       </li>
       <li>
         <router-link to="/items">items</router-link>
@@ -23,7 +23,7 @@ export default {
 <style scoped lang="scss">
 ul {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   justify-items: center;
 }
 
